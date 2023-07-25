@@ -231,3 +231,77 @@ def volume_2(length = 1, width = 1, height = 1)
 end
 
 puts volume_2(10, 5) # 50
+
+# Returnin multiple values
+# Ruby methods can only return one value
+
+def volume_3(length, width, height)
+    return length * width * height, 10
+end
+
+# but we can return multiple values by returning an array
+def volume_4(length, width, height)
+    return [length * width * height, weight:10]
+end
+
+# or by returning a hash
+def volume_5(length, width, height)
+    return { volume: length * width * height, weight: 10 }
+end
+
+puts volume_3(10, 5, 2) # 100
+puts volume_4(10, 5, 2) # weight: 10
+puts volume_5(10, 5, 2) # {:volume=>100, :weight=>10}
+
+# A better example
+def add_and_subtract(n1, n2)
+    add = n1 + n2
+    sub = n1 - n2
+    return [add, sub]
+end
+
+result = add_and_subtract(10, 5)
+puts result # 15, 5
+
+def add_and_subtract_2(n1, n2)
+    add = n1 + n2
+    sub = n1 - n2
+    return { add: add, sub: sub }
+end
+
+result_2 = add_and_subtract_2(10, 5)
+puts result_2 # {:add=>15, :sub=>5}
+
+# Excercerise 3 Pig Latin Translator
+
+# input: "hello"
+# output: "ellohay"
+
+# input: "eat apples"
+# output: "eatay applesay"
+
+VOWELS = ["a", "e", "i", "o", "u"]
+
+def pig_latin(word)
+    # Convert word to array
+    letters = word.split('')
+    # Find the index of the first vowel
+    first_vowel_index = letters.find_index { |letter| VOWELS.include?(letter) }
+    # Slice the array from the first vowel to the end of the array
+    first_part = letters.slice(first_vowel_index..-1)
+    # Slice the array from the beginning of the array to the first vowel
+    second_part = letters.slice(0...first_vowel_index)
+    # Check if the first letter is a vowel
+    if first_vowel_index == 0
+        # If the first letter is a vowel add "ay" to the end of the word
+        return word + "ay"
+    else
+        # If the first letter is not a vowel add "ay" to the end of the first part and join the two parts together
+        return first_part.join('') + second_part.join('') + "ay"
+    end
+end
+
+puts pig_latin("hello") # ellohay
+puts pig_latin("eat apples") # eatay applesay
+puts pig_latin("pig") # igpay
+puts pig_latin("ruby") # ubyray
